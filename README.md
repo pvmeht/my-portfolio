@@ -7,7 +7,7 @@ A modern, interactive, and performance-focused **developer portfolio** built wit
 ---
 
 ## 🌐 Live Preview
-🔗 **Portfolio:** _(Add your deployed URL here — Vercel / Netlify recommended)_
+🔗 **Portfolio:** _(link)_
 
 ---
 
