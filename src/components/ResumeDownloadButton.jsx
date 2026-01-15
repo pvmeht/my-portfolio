@@ -3,7 +3,7 @@ import profile from "../data/profile";
 
 const ResumeDownloadButton = forwardRef((props, ref) => {
   return (
-    <div ref={ref} className="fixed bottom-6 left-6 z-50">
+    <div ref={ref} className="fixed bottom-18 left-7 z-50">
       <a
         href={profile.resume}
         download={`${profile.fullName}_Resume.pdf`}
