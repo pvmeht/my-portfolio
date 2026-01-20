@@ -1,5 +1,14 @@
 import profile from '../data/profile';
 import Chip from '@mui/material/Chip';
+import SchoolIcon from '@mui/icons-material/School';
+import WorkIcon from '@mui/icons-material/Work';
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+
+const iconMap = {
+  education: <SchoolIcon fontSize="small" />,
+  experience: <WorkIcon fontSize="small" />,
+  future: <RocketLaunchIcon fontSize="small" />,
+};
 
 const About = () => {
   const { about } = profile;
@@ -17,121 +26,128 @@ const About = () => {
   return (
     <section
       id="about"
-      className="min-h-screen flex flex-col items-center justify-center px-6 bg-gradient-to-b from-[#0F172A] to-[#020617] text-[#F2E9E4]"
+      className="min-h-screen px-6 py-24 bg-gradient-to-b from-[#0F172A] to-[#020617] text-[#F2E9E4]"
     >
-      {/* Title */}
-      <div className="text-center mb-20">
-        <h2 className="text-4xl font-bold mb-2">About Me</h2>
-        <p className="opacity-70">
-          A snapshot of my academic and professional journey.
+      {/* Header */}
+      <div className="max-w-5xl mx-auto text-center mb-10">
+        <h2 className="text-4xl font-bold mb-3">About Me</h2>
+        <p className="opacity-75 text-lg">
+          Academic growth, professional impact, and what’s next.
         </p>
       </div>
 
+      {/* Context Card */}
+      <div className="max-w-4xl mx-auto mb-30">
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-xl">
+          <p className="text-sm leading-relaxed opacity-90">
+            {about.introduction}
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-3 justify-center">
+            <Chip label="Full-Stack Development" color="success" variant="outlined" />
+            <Chip label="Enterprise Systems" color="success" variant="outlined" />
+            <Chip label="Generative AI" color="success" variant="outlined" />
+            <Chip label="Leadership & Ownership" color="success" variant="outlined" />
+          </div>
+        </div>
+      </div>
+
       {/* Timeline */}
-      <div className="relative w-full max-w-6xl">
-        {/* Line */}
-        <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-white/20" />
+      <div className="relative max-w-6xl mx-auto">
+        {/* Base line */}
+        <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
         <div className="relative flex justify-between items-center">
-          {about.timeline
-            .filter(t => t.show)
-            .map((item, idx) => {
-              const details = resolveDetails(item);
+          {about.timeline.filter(t => t.show).map((item, idx) => {
+            const details = resolveDetails(item);
 
-              return (
-                <div key={idx} className="relative group flex flex-col items-center">
-                  {/* Top label */}
-                  <div className="mb-3 text-sm font-semibold tracking-wide">
-                    {item.label}
-                  </div>
+            return (
+              <div
+                key={idx}
+                className="relative group flex flex-col items-center w-[120px]"
+              >
+                {/* Label */}
+                <div className="mb-3 text-sm font-semibold text-center">
+                  {item.label}
+                </div>
 
-                  {/* Dot */}
-                  <div className="w-4 h-4 rounded-full bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.9)] cursor-pointer z-10" />
+                {/* Dot with icon */}
+                <div className="
+                  relative z-10
+                  w-10 h-10 rounded-full
+                  bg-blue-600/90
+                  flex items-center justify-center
+                  shadow-[0_0_25px_rgba(59,130,246,0.6)]
+                  transition-all
+                  group-hover:scale-110
+                ">
+                  {iconMap[item.type]}
+                </div>
 
-                  {/* Year */}
-                  <div className="mt-3 text-xs opacity-70">
-                    {item.year}
-                  </div>
+                {/* Year */}
+                <div className="mt-3 text-xs opacity-70">
+                  {item.year}
+                </div>
 
-                  {/* Tooltip */}
+                {/* Tooltip */}
+                <div className="
+                  absolute top-[-190px]
+                  opacity-0 scale-95
+                  group-hover:opacity-100 group-hover:scale-100
+                  transition-all duration-500
+                  z-50
+                ">
                   <div className="
-                    absolute top-[-170px] w-72
-                    opacity-0 scale-95
-                    group-hover:opacity-100 group-hover:scale-100
-                    transition-all duration-300
-                    z-50
+                    w-80 bg-white/10 backdrop-blur-xl
+                    border border-white/20
+                    rounded-xl p-4 shadow-2xl
                   ">
-                    <div className="
-                      bg-white/10 backdrop-blur-xl
-                      border border-white/20
-                      rounded-xl p-4 shadow-2xl
-                    ">
-                      {details?.title && (
-                        <h4 className="font-bold text-sm mb-1">
-                          {details.title || details.role}
-                        </h4>
-                      )}
+                    <h4 className="font-semibold text-sm mb-1">
+                      {details?.title || details?.role}
+                    </h4>
 
-                      {(details?.institute || details?.companyName) && (
-                        <p className="text-xs opacity-80 mb-1">
-                          {details.institute?.name || details.companyName}
-                        </p>
-                      )}
+                    <p className="text-xs opacity-80 mb-1">
+                      {details?.institute?.name || details?.companyName}
+                    </p>
 
-                      {(details?.year || details?.period) && (
-                        <p className="text-xs opacity-60 mb-2">
-                          {details.year || details.period}
-                        </p>
-                      )}
+                    <p className="text-xs opacity-60 mb-3">
+                      {details?.year || details?.period}
+                    </p>
 
-                      {details?.grade || details?.role && (
-                        <p className="text-xs font-medium">
-                          {details.grade || details.role}
-                        </p>
-                      )}
+                    {details?.grade && (
+                      <p className="text-xs font-medium mb-2">
+                        {details.grade}
+                      </p>
+                    )}
 
-                      { (details?.description || details?.skills?.length > 0) && (
-  <div className="mt-3 space-y-3">
-    {/* Description */}
-    {details?.description && (
-      <p className="text-xs opacity-80 leading-relaxed">
-        {details.description}
-      </p>
-    )}
-
-    {/* Skills as MUI Chips */}
-    {details?.skills?.length > 0 && (
-      <div className="flex flex-wrap gap-2">
-        {details.skills.map((skill, i) => (
-          <Chip
-            key={i}
-            label={skill}
-            size="small"
-            variant="outlined"
-            className="
-              text-xs font-medium
-              bg-gradient-to-r from-blue-50 to-indigo-50
-              dark:from-blue-950/30 dark:to-indigo-950/30
-            "
-            sx={{
-              borderColor: 'primary.main',
-              color: 'primary.main',
-              '& .MuiChip-label': {
-                px: 1.5,
-              },
-            }}
-          />
-        ))}
-      </div>
-    )}
-  </div>
-)}
-                    </div>
+                    {details?.skills?.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {details.skills.map((skill, i) => (
+                          <Chip
+                            key={i}
+                            label={skill}
+                            size="small"
+                            variant="outlined"
+                            sx={{
+                              borderColor: 'primary.main',
+                              color: 'primary.main',
+                              fontSize: '0.7rem',
+                            }}
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
         </div>
+      </div>
+
+      {/* Footer Hint */}
+      <div className="mt-8 text-center text-xs opacity-50">
+        Hover or tap milestones to explore details
       </div>
     </section>
   );
