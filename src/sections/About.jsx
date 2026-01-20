@@ -1,87 +1,90 @@
-import { FaGraduationCap, FaBriefcase, FaRocket } from "react-icons/fa";
-
-const timeline = [
-  {
-    year: "2020 – 2023",
-    title: "B.Sc. Computer Science",
-    place: "MIT ACS College, Pune",
-    description: "Strong foundation in programming, databases, and core CS concepts.",
-    icon: <FaGraduationCap />,
-  },
-  {
-    year: "2023 – 2025",
-    title: "M.Sc. Computer Science",
-    place: "MIT ACS College, Pune",
-    description: "Advanced CS, software engineering, AI & system design focus.",
-    icon: <FaGraduationCap />,
-  },
-  {
-    year: "Mar 2024 – Jun 2025",
-    title: "Associate Software Engineer",
-    place: "PureSoftSolutions",
-    description:
-      "Built full-stack apps using React, ASP.NET Core & SQL. Worked on SaaS products, APIs, deployments, and production support.",
-    icon: <FaBriefcase />,
-  },
-  {
-    year: "Now",
-    title: "Growing Engineer",
-    place: "AI • Full-Stack • Scalable Systems",
-    description:
-      "Exploring Generative AI, RAG, LLMs, and building real-world products with clean architecture.",
-    icon: <FaRocket />,
-  },
-];
+import profile from '../data/profile';
 
 const About = () => {
+  const { introduction, education, experience } = profile.about;
+
   return (
     <section
       id="about"
-      className="min-h-screen px-6 py-20 bg-gray-100 dark:bg-gray-900"
+      className="min-h-screen px-6 py-20 bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200"
     >
       {/* Heading */}
       <div className="max-w-6xl mx-auto text-center mb-16">
-        <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
-          About Me
-        </h2>
-        <p className="mt-4 max-w-3xl mx-auto text-gray-600 dark:text-gray-400">
-          Software Engineer with hands-on experience in full-stack development,
-          SaaS products, and modern web technologies. I enjoy building scalable
-          systems and exploring AI-driven solutions.
+        <h2 className="text-4xl font-bold mb-4">About Me</h2>
+        <p className="max-w-3xl mx-auto text-lg opacity-80">
+          {introduction}
         </p>
       </div>
 
-      {/* Timeline */}
-      <div className="relative max-w-6xl mx-auto">
-        {/* Dotted line */}
-        <div className="absolute top-6 left-0 right-0 border-t-2 border-dashed border-gray-400 dark:border-gray-600" />
+      {/* ===== Education Timeline ===== */}
+      <div className="max-w-6xl mx-auto mb-20">
+        <h3 className="text-2xl font-semibold mb-10 text-center">
+          Education Roadmap
+        </h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 relative">
-          {timeline.map((item, index) => (
-            <div key={index} className="text-center relative">
-              {/* Dot */}
-              <div className="mx-auto w-12 h-12 rounded-full bg-white dark:bg-gray-800 border-2 border-blue-500 flex items-center justify-center text-blue-500 shadow-md">
-                {item.icon}
+        <div className="relative flex flex-col md:flex-row justify-between items-center gap-10">
+          {/* Dotted line */}
+          <div className="absolute md:top-1/2 md:left-0 md:right-0 md:h-0.5 border-t-2 border-dashed border-gray-400 dark:border-gray-600 hidden md:block" />
+
+          {education
+            .filter(item => item.show)
+            .map((edu, idx) => (
+              <div
+                key={idx}
+                className="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 w-full md:w-64 text-center z-10"
+              >
+                {/* Dot */}
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-blue-500 border-4 border-white dark:border-gray-900" />
+
+                <h4 className="font-semibold text-lg">{edu.title}</h4>
+                <p className="text-sm opacity-70">{edu.year}</p>
+                <p className="text-sm mt-2">{edu.institute.name}</p>
+                <p className="text-xs opacity-60 mt-1">{edu.grade}</p>
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* ===== Experience ===== */}
+      <div className="max-w-6xl mx-auto">
+        <h3 className="text-2xl font-semibold mb-10 text-center">
+          Professional Experience
+        </h3>
+
+        {experience
+          .filter(exp => exp.show)
+          .map((exp, idx) => (
+            <div
+              key={idx}
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8"
+            >
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                <h4 className="text-xl font-bold">{exp.role}</h4>
+                <span className="text-sm opacity-70">{exp.period}</span>
               </div>
 
-              {/* Card */}
-              <div className="mt-6 bg-white dark:bg-gray-800 rounded-xl p-5 shadow-lg">
-                <span className="text-sm text-blue-500 font-semibold">
-                  {item.year}
-                </span>
-                <h3 className="mt-2 font-semibold text-gray-900 dark:text-white">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {item.place}
-                </p>
-                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">
-                  {item.description}
-                </p>
+              <p className="font-medium mb-4">
+                {exp.companyName} · {exp.location}
+              </p>
+
+              <ul className="list-disc pl-5 space-y-2 text-sm opacity-90">
+                {exp.responsibilities.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+
+              <div className="flex flex-wrap gap-2 mt-6">
+                {exp.skills.map((skill, i) => (
+                  <span
+                    key={i}
+                    className="px-3 py-1 text-xs rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300"
+                  >
+                    {skill}
+                  </span>
+                ))}
               </div>
             </div>
           ))}
-        </div>
       </div>
     </section>
   );
