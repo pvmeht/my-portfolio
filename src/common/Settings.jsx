@@ -201,7 +201,7 @@ export default function Settings({ onChange, anchorBelowRef }) {
                 </div>
               </div>
 
-              {/* Color chips – unchanged, but wrapped for better scrolling */}
+              {/* Color chips - unchanged, but wrapped for better scrolling */}
               <div>
                 <p className="text-sm uppercase text-[#C9ADA7] mb-2">Select Colors</p>
                 <div className="flex flex-wrap gap-2.5 max-h-40 overflow-y-auto pr-2">
