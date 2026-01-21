@@ -10,6 +10,10 @@ import ClickSpark from './common/ClickSpark';
 import Ribbons from './common/Ribbons';
 import SplashCursor from './common/SplashCursor';
 import Settings from "./common/Settings";
+import StackedSections from "./StackedSections";
+import ScrollStack, { ScrollStackItem } from './components/ui/ScrollStack';
+
+
 
 function App() {
 const resumeRef = useRef(null);
@@ -40,8 +44,17 @@ const [ribbonSettings, setRibbonSettings] = useState(null);
           sparkCount={8}
           duration={400}
         >
+          {/* <StackedSections>
+            <About />
+            <Home />
+          </StackedSections> */}
+{/* <ScrollStack>
+  <ScrollStackItem><Home /></ScrollStackItem>
+  <ScrollStackItem><About /></ScrollStackItem>
+</ScrollStack>     */}
           <Home />
           <About />
+          
           <Projects />
           <Contact />
 
